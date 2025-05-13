@@ -1,0 +1,17 @@
+<h2>Your PDF Jobs</h2>
+
+{% for job in jobs %}
+    <div style="margin-bottom: 20px;">
+        <p><strong>Uploaded:</strong> {{ job.created_at }}</p>
+        <p><strong>Status:</strong> <td>{{ job.status }}</td></p>
+
+        {% if job.completed and job.pdf_files %}
+            <p><strong>Generated PDFs:</strong></p>
+            <ul>
+                {% for file_url in job.pdf_files %}
+                    <li><a href="{{ file_url }}" download>Download {{ file_url|cut:"/generated_pdfs/" }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endfor %}

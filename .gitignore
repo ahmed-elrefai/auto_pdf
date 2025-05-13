@@ -1,0 +1,30 @@
+# Python-related
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.py[cod]
+
+# Django-specific
+*.sqlite3
+db.sqlite3
+
+# Media and generated files
+media/
+*.pdf
+
+
+
+
+# Environment & config
+.env
+*.env
+
+# OS-related
+.DS_Store
+Thumbs.db
+
+# IDE/editor configs
+.vscode/
+.idea/
+
