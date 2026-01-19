@@ -1,17 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}My Jobs - auto_pdf{% endblock %}
+
+{% block content %}
 <h2>Your PDF Jobs</h2>
 
 {% for job in jobs %}
-    <div style="margin-bottom: 20px;">
-        <p><strong>Uploaded:</strong> {{ job.created_at }}</p>
-        <p><strong>Status:</strong> <td>{{ job.status }}</td></p>
+<div
+    style="margin-bottom: 20px; background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border);">
+    <p><strong>Uploaded:</strong> {{ job.created_at }}</p>
+    <p><strong>Status:</strong> {{ job.status }}</p>
 
-        {% if job.completed and job.pdf_files %}
-            <p><strong>Generated PDFs:</strong></p>
-            <ul>
-                {% for file_url in job.pdf_files %}
-                    <li><a href="{{ file_url }}" download>Download {{ file_url|cut:"/generated_pdfs/" }}</a></li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    </div>
+    {% if job.completed and job.pdf_files %}
+    <p style="margin-top: 1rem;"><strong>Generated PDFs:</strong></p>
+    <ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;">
+        {% for file_url in job.pdf_files %}
+        <li style="margin-bottom: 0.5rem;">
+            <a href="{{ file_url }}" download style="color: var(--primary-color); text-decoration: none;">
+                📄 Download {{ file_url|cut:"/generated_pdfs/" }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+{% empty %}
+<p>No jobs found. <a href="{% url 'upload_pdf_job' %}" style="color: var(--primary-color);">Create one now?</a></p>
 {% endfor %}
+{% endblock %}

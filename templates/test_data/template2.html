@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>{{ student.name }} - Scorecard</title>
@@ -10,18 +11,22 @@
             background-color: #f2f4f8;
             padding: 2rem;
         }
+
         .card {
             border-radius: 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
+
         .score {
             font-size: 2rem;
             font-weight: bold;
         }
+
         .subject {
             font-size: 1.1rem;
             font-weight: 500;
         }
+
         .header {
             background-color: #0d6efd;
             color: white;
@@ -32,42 +37,44 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container d-flex justify-content-center">
         <div class="card w-75">
             <div class="header">
                 <h2>{{ student.name|title }}'s Scorecard</h2>
-                <p>ID: {{ student.id }}</p>
+                <!-- ID is not in CSV, using loop index or removing -->
+                <p>Student Report</p>
             </div>
             <div class="card-body">
                 <p><strong>Email:</strong> {{ student.email }}</p>
-                <p><strong>Class:</strong> {{ student.class_name }}</p>
+                <!-- Class is not in CSV -->
 
                 <hr>
 
                 <div class="row">
-                    {% for subject, score in student.scores.items %}
-                        <div class="col-md-6 mb-3">
-                            <div class="d-flex justify-content-between">
-                                <span class="subject">{{ subject|title }}</span>
-                                <span class="score">{{ score }}</span>
-                            </div>
+                    <!-- CSV structure is one row per subject/score -->
+                    <div class="col-md-12 mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="subject">{{ student.subject|title }}</span>
+                            <span class="score">{{ student.score }}</span>
                         </div>
-                    {% endfor %}
+                    </div>
                 </div>
 
                 <hr>
-                <p><strong>Total:</strong> {{ student.total }}</p>
-                <p><strong>Average:</strong> {{ student.average }}</p>
-                <p><strong>Status:</strong> 
-                    {% if student.passed %}
-                        <span class="text-success fw-bold">Passed</span>
+
+                <!-- Simple logic based on the single score provided -->
+                <p><strong>Status:</strong>
+                    {% if student.score|int >= 50 %}
+                    <span class="text-success fw-bold">Passed</span>
                     {% else %}
-                        <span class="text-danger fw-bold">Failed</span>
+                    <span class="text-danger fw-bold">Failed</span>
                     {% endif %}
                 </p>
             </div>
         </div>
     </div>
 </body>
+
 </html>

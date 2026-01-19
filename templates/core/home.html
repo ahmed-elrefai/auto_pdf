@@ -1,11 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Home - auto_pdf{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 4rem 0;">
     <h1>Welcome to our humble Homepage :)</h1>
-</body>
-</html>
+    <p style="font-size: 1.2rem; color: #cbd5e1; margin-bottom: 2rem;">
+        Generate beautiful PDFs from your data with ease.
+    </p>
+    {% if user.is_authenticated %}
+    <a href="{% url 'upload_pdf_job' %}" class="btn">Get Started</a>
+    {% else %}
+    <a href="/accounts/login/" class="btn">Login to Start</a>
+    {% endif %}
+</div>
+{% endblock %}

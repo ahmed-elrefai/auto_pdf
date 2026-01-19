@@ -1,9 +1,41 @@
 <html>
-  <head><title>Report</title></head>
-  <body>
-    <h1>Student Report</h1>
-    <p><strong>Name:</strong> {name}</p>
-    <p><strong>Email:</strong> {email}</p>
-    <p><strong>Score:</strong> {score}</p>
-  </body>
+
+<head>
+  <title>Report - {{ student.name }}</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+    }
+
+    h1 {
+      color: #333;
+      border-bottom: 2px solid #333;
+      padding-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Student Report</h1>
+  <p><strong>Name:</strong> {{ name }}</p>
+  <p><strong>Email:</strong> {{ email }}</p>
+  <p><strong>Subject:</strong> {{ subject }}</p>
+  <p><strong>Score:</strong> {{ score }}</p>
+
+  <p>
+    <strong>Result:</strong>
+    {% if student.score|int >= 50 %}
+    <span style="color: green; font-weight: bold;">PASS</span>
+    {% else %}
+    <span style="color: red; font-weight: bold;">FAIL</span>
+    {% endif %}
+  </p>
+</body>
+
 </html>
