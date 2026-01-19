@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import PDFJobForm
 from .models import PDFJob
-from .utils import generate_pdfs_from_csv
+from .tasks import generate_pdfs_from_csv
 from django.conf import settings
 import os
 
@@ -14,12 +14,7 @@ def upload_pdf_job(request):
             job = form.save(commit=False)
             job.user = request.user
             job.save()
-            
-            # 🔥 Generate PDFs
-            generate_pdfs_from_csv(job)
-
-            job.completed = True
-            job.save()
+            generate_pdfs_from_csv.delay(job.id)
 
             return redirect('job_list')
     else:

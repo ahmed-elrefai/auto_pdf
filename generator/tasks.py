@@ -8,8 +8,12 @@ except OSError:
     print("WARNING: WeasyPrint could not be loaded. PDF generation will fail. Please install GTK3 runtime.")
 
 from jinja2 import Template
+from celery import shared_task
+from .models import PDFJob
 
-def generate_pdfs_from_csv(job):
+@shared_task
+def generate_pdfs_from_csv(job_id):
+    job = PDFJob.objects.get(id=job_id)
     csv_path = job.csv_file.path
     template_path = job.template_file.path
     output_dir = os.path.join(settings.MEDIA_ROOT, 'generated_pdfs', str(job.id))
@@ -22,8 +26,6 @@ def generate_pdfs_from_csv(job):
     with open(csv_path, newline='', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         for idx, row in enumerate(reader, 1):
-            # Jinja2 accepts dict directly. 
-            # We map 'student' to the row to match the user's template.
             context_data = {**row, 'student': row}
             filled_html = jinja_template.render(context_data)
 
@@ -32,3 +34,7 @@ def generate_pdfs_from_csv(job):
                 HTML(string=filled_html).write_pdf(pdf_path)
             else:
                 raise RuntimeError("WeasyPrint is not available. Cannot generate PDF.")
+    
+    # Mark job as completed
+    job.completed = True
+    job.save()
