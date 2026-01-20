@@ -44,4 +44,4 @@ Separation of Concerns: Decoupling data parsing from PDF rendering.
 Resource Efficiency: Optimized for memory usage when handling large CSV files.
 
 ## 👨‍💻 Author
-**Ahmed Elrefai**, Backend Developer & CS Student at Ain Shams University [LinkedIn](https://www.linkedin.com/ahmed-elrefai) | [YouTube](https://www.youtube.com/@ibnalrefai)
+**Ahmed Elrefai**, Backend Developer & CS Student at Ain Shams University [LinkedIn](https://www.linkedin.com/in/ahmed-elrefai) | [YouTube](https://www.youtube.com/@ibnalrefai)
